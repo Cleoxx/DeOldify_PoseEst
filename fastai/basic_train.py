@@ -221,14 +221,24 @@ class Learner():
         for g in self.layer_groups[n:]: requires_grad(g, True)
         self.create_opt(defaults.lr)
 
+    def freeze_from(self, m:int)->None:
+        "Freeze layers up to layer group `m`."
+        for g in self.layer_groups[:m]:
+            for l in g:
+                if not self.train_bn or not isinstance(l, bn_types): requires_grad(l, False)
+        for g in self.layer_groups[:m]: requires_grad(g, True)
+        self.create_opt(defaults.lr)
+
     def freeze(self)->None:
         "Freeze up to last layer group."
         assert(len(self.layer_groups)>1)
-        self.freeze_to(-1)
+        #self.freeze_to(-1)
+        self.freeze_from (1)
 
     def unfreeze(self):
         "Unfreeze entire model."
-        self.freeze_to(0)
+        #self.freeze_to(0)
+        self.freeze_from(0)
 
     def export(self, file:PathLikeOrBinaryStream='export.pkl', destroy=False):
         "Export the state of the `Learner` in `self.path/file`. `file` can be file-like (file or buffer)"
