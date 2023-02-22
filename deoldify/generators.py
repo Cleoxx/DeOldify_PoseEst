@@ -22,7 +22,7 @@ def gen_inference_wide(
 
 
 def gen_learner_wide(
-    data: ImageDataBunch, gen_loss, arch=models.resnet101, nf_factor: int = 2
+    data: ImageDataBunch, gen_loss, arch=torch.load('C:/Users/User/DeOldify/models/ColorizeStable_gen.pth'), nf_factor: int = 2
 ) -> Learner:
     return unet_learner_wide(
         data,
