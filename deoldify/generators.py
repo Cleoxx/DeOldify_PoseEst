@@ -10,7 +10,7 @@ from .dataset import *
 
 # Weights are implicitly read from ./models/ folder
 def gen_inference_wide(
-    root_folder: Path, weights_name: str, nf_factor: int = 2, arch=("C:/Users/User/DeOldify/models/ColorizeStable_gen.pth") -> Learner:
+    root_folder: Path, weights_name: str, nf_factor: int = 2, arch=models.resnet101 -> Learner:
     data = get_dummy_databunch()
     learn = gen_learner_wide(
         data=data, gen_loss=F.l1_loss, nf_factor=nf_factor, arch=arch
